@@ -1,0 +1,29 @@
+@import 'variables';
+
+body{
+    margin:0;
+    background-color:#222222;
+    font-family: 'Catamaran', sans-serif;
+    color: #f1f1f1;
+}
+
+h1, h2{
+    font-weight:normal;
+    font-family: 'Lobster', cursive;
+}
+
+h1{
+    font-size:52px;
+}
+
+h2{
+    font-size:36px;
+    margin-top:20px;
+    margin-bottom:5px;
+}
+
+.content{
+    padding:20px;
+    max-width:$content-width;
+    margin: 0 auto;
+}

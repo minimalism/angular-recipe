@@ -1,8 +1,6 @@
-## angular2-seed
+## angular-recipe
 
-A simple starter project demonstrating the basic concepts of Angular 2.
-
-This branch uses [Webpack](https://webpack.github.io/) for Development. There is also a SystemJS branch available.
+Based on from [angular2-seed](https://github.com/angular/angular2-seed).
 
 ### Usage
 - Clone or fork this repository

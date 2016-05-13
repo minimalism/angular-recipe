@@ -2,6 +2,13 @@ var webpack = require('webpack');
 var path = require('path');
 
 
+const sassLoaders = [
+  'css-loader',
+  'postcss-loader',
+  'sass-loader?indentedSyntax=sass&includePaths[]=' + path.resolve(__dirname, './src')
+]
+
+
 // Webpack Config
 var webpackConfig = {
   entry: {
@@ -21,27 +28,14 @@ var webpackConfig = {
   module: {
     loaders: [
       // .ts files for TypeScript
-      { test: /\.ts$/, loader: 'awesome-typescript-loader' },
-
+      { 
+        test: /\.ts$/, 
+        loader: 'awesome-typescript-loader' 
+      }
     ]
   }
 
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // Our Webpack Defaults
@@ -66,6 +60,16 @@ var defaultConfig = {
           path.join(__dirname, 'node_modules', '@angular2-material'),
           path.join(__dirname, 'node_modules', '@angular'),
         ]
+      },
+    ],
+    loaders: [
+      {
+        test: /\.scss$/,
+        exclude: /node_modules/,
+        //loader: 'style!css!sass'
+        loaders: ["style", "css?sourceMap", "sass?sourceMap"]
+        //loaders: ["style", "css", "sass"]
+        //loaders: ['raw-loader', 'sass-loader?sourceMap']
       }
     ],
     noParse: [
@@ -76,7 +80,7 @@ var defaultConfig = {
 
   resolve: {
     root: [ path.join(__dirname, 'src') ],
-    extensions: ['', '.ts', '.js'],
+    extensions: ['', '.ts', '.js', '.scss'],
     alias: {
       'angular2/testing': path.join(__dirname, 'node_modules', '@angular', 'core', 'testing.js'),
       '@angular/testing': path.join(__dirname, 'node_modules', '@angular', 'core', 'testing.js'),

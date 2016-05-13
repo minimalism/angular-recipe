@@ -1,0 +1,20 @@
+<div class="recipe">
+    <h1>{{ recipe.name }}</h1>
+
+    <div class="ingredient-list">
+        <h2>Ingredients</h2>
+        <ul>
+            <li *ngFor="let ingredient of recipe.ingredients" class="ingredient">
+                <ingredient [data]="ingredient">
+                </ingredient>
+            </li>
+        </ul>
+    </div>
+
+    <ol class="steps-list">
+        <li *ngFor="let recipeStep of recipe.steps" class="step">
+            <recipe-step [stepData]="recipeStep">
+            </recipe-step>
+        </li>
+    </ol>
+</div>

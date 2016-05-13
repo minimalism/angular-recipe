@@ -4,7 +4,7 @@ import {provide, enableProdMode} from '@angular/core';
 import {HTTP_PROVIDERS} from '@angular/http';
 import {ROUTER_PROVIDERS} from '@angular/router-deprecated';
 
-import {RecipeApp} from './app/recipe-app';
+import {RecipeApp} from './app/recipe-app.component';
 
 
 // enableProdMode()

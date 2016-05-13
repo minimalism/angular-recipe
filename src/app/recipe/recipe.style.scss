@@ -1,0 +1,25 @@
+@import '../variables';
+
+.recipe {
+    position:relative;
+    
+}
+
+.steps-list{
+    width:400px;
+}
+
+.ingredient-list{
+    position:absolute;
+    right:-350px;
+    width:300px;
+}
+
+@media screen and (max-width: $breakpoint-small) {
+
+    .ingredient-list{
+        position:initial;
+        max-width:none;
+    }
+
+}

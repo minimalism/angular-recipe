@@ -1,15 +1,9 @@
-<h1>Recipe</h1>
+<div class="content">
+  <main>
+    <recipe [data]="recipe"></recipe>
+  </main>
 
-<main>
-  <ol>
-    <li *ngFor="let step of recipe.steps">
-      {{ step.description }}
-      <!--<step [description]="step.description", [ingredients]="step.ingredients"></step>-->
-    </li>
-  </ol>
-</main>
-
-
-<footer>
-  © 2016
-</footer>
+  <footer>
+    © 2016
+  </footer>
+</div>

@@ -1,6 +1,7 @@
 import { Ingredient } from '../ingredient/ingredient.data';
 
 export class Step {
+    
     description : string;
     ingredients : Ingredient[];
     
