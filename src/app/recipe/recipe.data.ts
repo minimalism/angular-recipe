@@ -6,6 +6,9 @@ export class Recipe {
     steps : Step[];
     ingredients : Ingredient[];
     
+    ingredientsListPosition : string = "relative";
+    ingredientsListTop : string = "25px";
+    
     constructor(name : string, steps : Step[]){
         this.name = name;
         this.steps = steps;

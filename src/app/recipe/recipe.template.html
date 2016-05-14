@@ -1,7 +1,8 @@
-<div class="recipe">
+<div class="recipe" scrollSpy>
     <h1>{{ recipe.name }}</h1>
+    <div class="description">Todo: Write a mouthwatering description here!</div>
 
-    <div class="ingredient-list">
+    <div #ingredientsList class="ingredient-list" [ngStyle]=ingredientsListStyle>
         <h2>Ingredients</h2>
         <ul>
             <li *ngFor="let ingredient of recipe.ingredients" class="ingredient">
