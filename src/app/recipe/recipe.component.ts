@@ -18,28 +18,65 @@ export class RecipeComponent implements AfterViewInit {
     @Input('data') recipe : Recipe;
     
     ingredientsListStyle;
-    
+
     constructor(private scrollSpyService: ScrollSpyService){
          this.scrollSpyService = scrollSpyService;
     }
     
+    updateStickyDiv(e : any) {
+        
+    }
+    
     ngAfterViewInit() {
+        
         this.scrollSpyService.getObservable('window').subscribe((e: any) => {
+            var targetedId = "ingredient-list";
+            var targetedContainerSuffix = "container___"; 
 
-            var ingredients = e.target.querySelector(".ingredient-list")
+            var ingredients = e.target.querySelector('#'+targetedId)
             if (ingredients){
+
+                var stickheight = 100;
                 var clientRect = ingredients.getBoundingClientRect();
                 var windowTop = (window.pageYOffset || e.target.scrollTop)  - (e.target.clientTop || 0);
-                if (this.ingredientsListStyle === undefined && clientRect.top < 100){
+                                
+                if (this.ingredientsListStyle === undefined && clientRect.top < stickheight){
+                    var containerId = targetedId + targetedContainerSuffix;
+                    // find previously created container in dom?
+                    var container = e.target.querySelector('#'+containerId);
+                    if (!container){
+                        container = document.createElement("div");
+                        container.setAttribute("id", containerId); 
+                        var computedStyle = window.getComputedStyle(ingredients);
+                        container.style.position = computedStyle.position;
+                        container.style.top = computedStyle.top; 
+                        container.style.left = computedStyle.left;
+                        container.style.right = computedStyle.right;
+                        container.style.bottom = computedStyle.bottom;
+                        ingredients.parentElement.insertBefore(container, ingredients);
+                    }
+                    
+                    // Stick to current height
                     this.ingredientsListStyle = { 
                         "position" : 'fixed',
                         "top" : clientRect.top + 'px',
                         "left" : clientRect.left + 'px'
                     };
                 }
-                else if (this.ingredientsListStyle !== undefined && windowTop < 540){
-                    
-                    delete this.ingredientsListStyle;
+                else if (this.ingredientsListStyle !== undefined){
+                    // Unstick
+                    var containerId = targetedId + targetedContainerSuffix;
+                    var ingredientsContainer = e.target.querySelector('#'+containerId);
+                    if (ingredientsContainer){
+                        var containerClientRect = ingredientsContainer.getBoundingClientRect();
+                        if (containerClientRect.top > clientRect.top){
+                            delete this.ingredientsListStyle;
+                            ingredientsContainer.remove();
+                        }
+                    }
+                    else{
+                        console.log("no ingredients container found :0");
+                    }
                 }
             }
         });

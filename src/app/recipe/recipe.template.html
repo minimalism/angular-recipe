@@ -2,7 +2,8 @@
     <h1>{{ recipe.name }}</h1>
     <div class="description">Todo: Write a mouthwatering description here!</div>
 
-    <div #ingredientsList class="ingredient-list" [ngStyle]=ingredientsListStyle>
+    <!--<div class="ingredient-list-container"></div>-->
+    <div #ingredientsList id="ingredient-list" [ngStyle]=ingredientsListStyle>
         <h2>Ingredients</h2>
         <ul>
             <li *ngFor="let ingredient of recipe.ingredients" class="ingredient">

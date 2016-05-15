@@ -8,11 +8,11 @@
     width:400px;
 }
 
-.ingredient-list{
+#ingredient-list {
     position:absolute;
     right:-350px;
     width:300px;
-    top:600px;
+    top:200px;
 }
 
 @media screen and (max-width: $breakpoint-small) {
