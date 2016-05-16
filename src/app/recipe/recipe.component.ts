@@ -17,23 +17,34 @@ import { ScrollSpyDirective, ScrollSpyService} from 'ng2-scrollspy';
 export class RecipeComponent implements AfterViewInit {
     @Input('data') recipe : Recipe;
     
+    targetedId = "ingredient-list";
+    targetedContainerSuffix = "container___"; 
     ingredientsListStyle;
 
     constructor(private scrollSpyService: ScrollSpyService){
          this.scrollSpyService = scrollSpyService;
+         //window.onresize = this.onResize;
     }
     
     updateStickyDiv(e : any) {
         
     }
     
-    ngAfterViewInit() {
-        
-        this.scrollSpyService.getObservable('window').subscribe((e: any) => {
-            var targetedId = "ingredient-list";
-            var targetedContainerSuffix = "container___"; 
+    onResize($event){
+        if (this.ingredientsListStyle){
+            var ingredientsContainer = document.querySelector('#' + this.targetedId + this.targetedContainerSuffix);
+            var clientRect = ingredientsContainer.getBoundingClientRect();
+            this.ingredientsListStyle.left = clientRect.left + "px";
+        }
+    }
 
-            var ingredients = e.target.querySelector('#'+targetedId)
+    
+    ngAfterViewInit() {
+        var ctrl = this;
+        this.scrollSpyService.getObservable('window').subscribe((e: any) => {
+            
+
+            var ingredients = document.querySelector('#'+this.targetedId);
             if (ingredients){
 
                 var stickheight = 100;
@@ -41,7 +52,7 @@ export class RecipeComponent implements AfterViewInit {
                 var windowTop = (window.pageYOffset || e.target.scrollTop)  - (e.target.clientTop || 0);
                                 
                 if (this.ingredientsListStyle === undefined && clientRect.top < stickheight){
-                    var containerId = targetedId + targetedContainerSuffix;
+                    var containerId = this.targetedId + this.targetedContainerSuffix;
                     // find previously created container in dom?
                     var container = e.target.querySelector('#'+containerId);
                     if (!container){
@@ -53,6 +64,7 @@ export class RecipeComponent implements AfterViewInit {
                         container.style.left = computedStyle.left;
                         container.style.right = computedStyle.right;
                         container.style.bottom = computedStyle.bottom;
+                        container.style.width = computedStyle.width;
                         ingredients.parentElement.insertBefore(container, ingredients);
                     }
                     
@@ -65,7 +77,7 @@ export class RecipeComponent implements AfterViewInit {
                 }
                 else if (this.ingredientsListStyle !== undefined){
                     // Unstick
-                    var containerId = targetedId + targetedContainerSuffix;
+                    var containerId = this.targetedId + this.targetedContainerSuffix;
                     var ingredientsContainer = e.target.querySelector('#'+containerId);
                     if (ingredientsContainer){
                         var containerClientRect = ingredientsContainer.getBoundingClientRect();
