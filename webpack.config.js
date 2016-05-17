@@ -89,7 +89,9 @@ var defaultConfig = {
       'angular2/testing': path.join(__dirname, 'node_modules', '@angular', 'testing', 'index.js'),
       'angular2/router': path.join(__dirname, 'node_modules', '@angular', 'router-deprecated', 'index.js'),
       'angular2/http': path.join(__dirname, 'node_modules', '@angular', 'http', 'index.js'),
-      'angular2/http/testing': path.join(__dirname, 'node_modules', '@angular', 'http', 'testing.js')
+      'angular2/http/testing': path.join(__dirname, 'node_modules', '@angular', 'http', 'testing.js'),
+      'lodash': path.join(__dirname, 'node_modules', 'lodash', 'lodash.min.js'),
+      'rekapi': path.join(__dirname, 'node_modules', 'rekapi', 'dist', 'rekapi.min.js')
     },
   },
 

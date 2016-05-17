@@ -4,7 +4,6 @@ import {provide, enableProdMode} from '@angular/core';
 import {HTTP_PROVIDERS} from '@angular/http';
 import {ROUTER_PROVIDERS} from '@angular/router-deprecated';
 import {ScrollSpyService} from 'ng2-scrollspy';
-
 import {RecipeApp} from './app/recipe-app.component';
 
 

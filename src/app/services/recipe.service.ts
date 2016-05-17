@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Recipe } from './recipe.data';
-import { Step } from '../step/step.data';
-import { Ingredient } from '../ingredient/ingredient.data';
+import { Recipe } from './../components/recipe/recipe.data';
+import { Step } from './../components/step/step.data';
+import { Ingredient } from './../components/ingredient/ingredient.data';
 
 @Injectable()
 export class RecipeService {
@@ -14,7 +14,7 @@ export class RecipeService {
                   new Ingredient("Yellow Onion", "1") ]),
                 
               new Step("Fry the broccoli in olive oil. After a few minutes, add the onion.", 
-                [ new Ingredient("Broccoli", "1"), 
+                [ new Ingredient("Olive oil", "0ml"), 
                 ]),
                 
               new Step("Mix the Soy sauce and Sriracha into a bowl. Add 100dl cold water.", 
@@ -27,8 +27,12 @@ export class RecipeService {
                    new Ingredient("Garlic", "2 cloves"),
                 ]),
                 
-              new Step("Add the cornstarch to the bowl, and stir until the clumps have dissolved.", 
+              new Step("Mix the contents of the bowl into the frying pan and let simmer until it thickens.", 
                 [  new Ingredient("Cornstarch", "0dl"),
+                ]),
+                
+              new Step("Add the cooked lentils and stir.", 
+                [  new Ingredient("Red Lentils", "0dl"),
                 ]),
                 
               new Step("Ready to eat!",

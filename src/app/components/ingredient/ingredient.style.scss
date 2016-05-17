@@ -1,0 +1,21 @@
+.ingredient{
+    
+    .sprite{
+        background-color:#0f0;
+        position: absolute;
+        width: 20px;
+        left: 0px;
+    }
+    
+    .used{
+        color: #ccc;
+        text-decoration:line-through;
+        transition: 1s linear all;
+    }
+    margin: 5px;
+    position: relative;
+}
+
+/*@keyframes flash {
+	50% { left: -110px; }
+}*/

@@ -1,29 +1,36 @@
 import { Component, Input, AfterViewInit, ElementRef, ViewChild } from '@angular/core'; 
 import { Recipe } from './recipe.data.ts';
 import { Step } from '../step/step.data.ts';
+import { Ingredient } from '../ingredient/ingredient.data.ts';
 import { StepComponent } from '../step/step.component.ts';
 import { IngredientComponent } from '../ingredient/ingredient.component.ts';
+import { AnimationService } from '../../services/animation.service.ts';
+
 import { ScrollSpyDirective, ScrollSpyService} from 'ng2-scrollspy';
+import * as _ from 'lodash';
 
 
 @Component({
     selector: 'recipe',
+    providers: [ AnimationService ],
     directives: [ StepComponent, IngredientComponent, ScrollSpyDirective ],
     styleUrls: [
-        require('app/recipe/recipe.style.scss')
+        require('app/components/recipe/recipe.style.scss')
     ],
-    templateUrl: 'app/recipe/recipe.template.html'
+    templateUrl: 'app/components/recipe/recipe.template.html'
 })
 export class RecipeComponent implements AfterViewInit {
     @Input('data') recipe : Recipe;
+    unusedIngredients : Array<Ingredient> = [];
+    usedIngredients : Array<Ingredient> = [];
     
-    targetedId = "ingredient-list";
+    targetedId = "right-column";
     targetedContainerSuffix = "container___"; 
     ingredientsListStyle;
 
-    constructor(private scrollSpyService: ScrollSpyService){
+    constructor(private scrollSpyService: ScrollSpyService, private animationService : AnimationService){
          this.scrollSpyService = scrollSpyService;
-         //window.onresize = this.onResize;
+         
     }
     
     updateStickyDiv(e : any) {
@@ -41,15 +48,42 @@ export class RecipeComponent implements AfterViewInit {
     
     ngAfterViewInit() {
         var ctrl = this;
+        
+        for (var ingredient of this.recipe.ingredients){
+            this.unusedIngredients.push(ingredient);
+        }
+        
         this.scrollSpyService.getObservable('window').subscribe((e: any) => {
+            // Check which steps have been taken and ingredients used along the Y scrollbar
+             var windowTop = (window.pageYOffset || e.target.scrollTop)  - (e.target.clientTop || 0);
+            ctrl.unusedIngredients = _(ctrl.unusedIngredients).dropWhile((ingredient : Ingredient) => {
+                if (ingredient.scrollY < windowTop){
+                    ingredient.use();
+                    ctrl.usedIngredients.unshift(ingredient);
+                    //console.log("used " + ingredient.name);
+                    this.animationService.animate(ingredient.spriteId);
+                    return true;
+                }
+                return false;
+            }).value();
             
+            ctrl.usedIngredients = _(ctrl.usedIngredients).dropWhile((ingredient : Ingredient) => {
+                if (ingredient.scrollY > windowTop){
+                    //console.log("unused " + ingredient.name);
+                    ingredient.unuse();
+                    ctrl.unusedIngredients.unshift(ingredient);
+                    this.animationService.unanimate(ingredient.spriteId);
+                    return true;
+                }
+                return false;
+            }).value();
 
             var ingredients = document.querySelector('#'+this.targetedId);
             if (ingredients){
 
-                var stickheight = 100;
+                var stickheight = 0;
                 var clientRect = ingredients.getBoundingClientRect();
-                var windowTop = (window.pageYOffset || e.target.scrollTop)  - (e.target.clientTop || 0);
+                windowTop;
                                 
                 if (this.ingredientsListStyle === undefined && clientRect.top < stickheight){
                     var containerId = this.targetedId + this.targetedContainerSuffix;
@@ -71,7 +105,7 @@ export class RecipeComponent implements AfterViewInit {
                     // Stick to current height
                     this.ingredientsListStyle = { 
                         "position" : 'fixed',
-                        "top" : clientRect.top + 'px',
+                        "top" : stickheight + 'px',
                         "left" : clientRect.left + 'px'
                     };
                 }

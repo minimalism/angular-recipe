@@ -1,0 +1,71 @@
+@import '../../variables';
+
+.recipe {
+    position:relative;
+    display:flex;
+    flex-direction:row;
+}
+
+.description-content{
+    max-width: 500px;
+    float:right;
+}
+
+.steps-list{
+}
+
+.description-column{
+    position:relative;
+    width:50%;
+}
+#right-column{
+    width:50%;
+    position:relative;
+    display: flex;
+    flex-direction: row;
+}
+
+.utensil{
+    z-index:10;
+}
+
+#cutting-board{
+    top:50vh;
+    position:absolute;
+}
+
+#frying-pan{
+    top:50vh;
+    position:absolute;
+    
+}
+
+#ingredient-list {
+    position: relative;
+    //position:absolute;
+    width:300px;
+    ul{
+        list-style-type:none;
+    }
+}
+
+#cooking-area{
+    background-color:#552;
+    position: relative;
+    text-align: center;
+    width:50%;
+    height:100vh;
+}
+
+@media screen and (max-width: $breakpoint-small) {
+    #right-column{
+        flex-direction: column;
+    }
+    #cooking-area, #ingredient-list{
+        height:50vh;
+        width:100%;
+    }
+    #cooking-area{
+        order: 2;
+    }
+}
