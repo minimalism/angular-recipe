@@ -3,7 +3,8 @@
     .sprite{
         background-color:#0f0;
         position: absolute;
-        width: 20px;
+        width: 8vh;
+        height: 8vh;
         left: 0px;
     }
     
@@ -14,6 +15,13 @@
     }
     margin: 5px;
     position: relative;
+}
+
+#broccoli {
+    background-size: 80px 60px;
+    background-repeat: no-repeat;
+    background: url("~./../../resource/sprite.png");
+    //background: url('../../resource/sprite.png') 0 0;
 }
 
 /*@keyframes flash {

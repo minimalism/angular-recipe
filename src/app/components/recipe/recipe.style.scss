@@ -46,6 +46,12 @@
     width:300px;
     ul{
         list-style-type:none;
+        display: flex;
+        flex-direction: column;
+        height: 90vh;
+        li {
+            flex:1;
+        }
     }
 }
 

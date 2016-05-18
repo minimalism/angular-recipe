@@ -1,13 +1,6 @@
 var webpack = require('webpack');
 var path = require('path');
-
-
-const sassLoaders = [
-  'css-loader',
-  'postcss-loader',
-  'sass-loader?indentedSyntax=sass&includePaths[]=' + path.resolve(__dirname, './src')
-]
-
+//var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 // Webpack Config
 var webpackConfig = {
@@ -18,7 +11,7 @@ var webpackConfig = {
   },
 
   output: {
-    path: './dist',
+    path: './dist'
   },
 
   plugins: [
@@ -34,7 +27,6 @@ var webpackConfig = {
       }
     ]
   }
-
 };
 
 
@@ -46,7 +38,7 @@ var defaultConfig = {
   output: {
     filename: '[name].bundle.js',
     sourceMapFilename: '[name].map',
-    chunkFilename: '[id].chunk.js'
+    chunkFilename: '[id].chunk.js',
   },
 
   module: {
@@ -66,10 +58,12 @@ var defaultConfig = {
       {
         test: /\.scss$/,
         exclude: /node_modules/,
-        //loader: 'style!css!sass'
-        loaders: ["style", "css?sourceMap", "sass?sourceMap"]
-        //loaders: ["style", "css", "sass"]
-        //loaders: ['raw-loader', 'sass-loader?sourceMap']
+        //loader: ExtractTextPlugin.extract('style', 'css?'+ '/' + 'sourceMap!style!sass?sourceComments&')
+        
+        loaders: ["style", "css?sourceMap", "sass?sourceMap"],
+      },
+      { test: /\.png$/,    
+        loader: "url-loader?limit=10000&minetype=image/png&name=[path][name].[ext]" 
       }
     ],
     noParse: [
