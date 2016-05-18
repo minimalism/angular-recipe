@@ -4,7 +4,7 @@
             <h1>{{ recipe.name }}</h1>
 
             <ol class="steps-list">
-                <li *ngFor="let recipeStep of recipe.steps" class="step">
+                <li *ngFor="let recipeStep of recipe.steps">
                     <recipe-step [stepData]="recipeStep">
                     </recipe-step>
                 </li>

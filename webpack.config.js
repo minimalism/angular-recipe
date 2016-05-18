@@ -91,7 +91,7 @@ var defaultConfig = {
       'angular2/http': path.join(__dirname, 'node_modules', '@angular', 'http', 'index.js'),
       'angular2/http/testing': path.join(__dirname, 'node_modules', '@angular', 'http', 'testing.js'),
       'lodash': path.join(__dirname, 'node_modules', 'lodash', 'lodash.min.js'),
-      'rekapi': path.join(__dirname, 'node_modules', 'rekapi', 'dist', 'rekapi.min.js')
+      'q': path.join(__dirname, 'node_modules', 'q', 'q.js'),
     },
   },
 

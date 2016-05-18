@@ -5,6 +5,7 @@ import { Ingredient } from '../ingredient/ingredient.data.ts';
 import { StepComponent } from '../step/step.component.ts';
 import { IngredientComponent } from '../ingredient/ingredient.component.ts';
 import { AnimationService } from '../../services/animation.service.ts';
+import { Animation } from '../animation/animation.data.ts';
 
 import { ScrollSpyDirective, ScrollSpyService} from 'ng2-scrollspy';
 import * as _ from 'lodash';
@@ -12,7 +13,7 @@ import * as _ from 'lodash';
 
 @Component({
     selector: 'recipe',
-    providers: [ AnimationService ],
+    providers: [ ],
     directives: [ StepComponent, IngredientComponent, ScrollSpyDirective ],
     styleUrls: [
         require('app/components/recipe/recipe.style.scss')
@@ -24,6 +25,7 @@ export class RecipeComponent implements AfterViewInit {
     unusedIngredients : Array<Ingredient> = [];
     usedIngredients : Array<Ingredient> = [];
     
+    private windowTop : number = 0;
     targetedId = "right-column";
     targetedContainerSuffix = "container___"; 
     ingredientsListStyle;
@@ -33,18 +35,25 @@ export class RecipeComponent implements AfterViewInit {
          
     }
     
-    updateStickyDiv(e : any) {
-        
-    }
-    
     onResize($event){
         if (this.ingredientsListStyle){
             var ingredientsContainer = document.querySelector('#' + this.targetedId + this.targetedContainerSuffix);
             var clientRect = ingredientsContainer.getBoundingClientRect();
             this.ingredientsListStyle.left = clientRect.left + "px";
         }
+        
+        this.recalculateStepY();
     }
-
+    
+    private recalculateStepY() {
+        for (var step of this.recipe.steps){
+            var stepContainer = document.querySelector('#' + step.id);
+            var clientRect = stepContainer.getBoundingClientRect();
+            
+            step.top = clientRect.top + this.windowTop;
+            step.height = clientRect.height;
+        }
+    }
     
     ngAfterViewInit() {
         var ctrl = this;
@@ -53,37 +62,57 @@ export class RecipeComponent implements AfterViewInit {
             this.unusedIngredients.push(ingredient);
         }
         
+        this.recalculateStepY();
+        
+        this.animationService.generateAnimationLayers(this.recipe.animations);
+        
         this.scrollSpyService.getObservable('window').subscribe((e: any) => {
+            
+            var wtop = this.windowTop = (window.pageYOffset || document.documentElement.scrollTop)  - (document.documentElement.clientTop || 0);
+            
+            // Calculate current animationstep
+            var stepIndex = _.findIndex(this.recipe.steps, (step : Step) => {
+                return step.top > wtop
+            });
+            if (stepIndex > -1){
+                if (stepIndex > 0){
+                    var prevCompletedStep = this.recipe.steps[stepIndex-1];
+                    this.animationService.setStep(stepIndex + (wtop - prevCompletedStep.top) / prevCompletedStep.height);
+                }
+                else{
+                    this.animationService.setStep(0);
+                } 
+            }
+            else{
+                this.animationService.setStep(999);
+            }
+            
             // Check which steps have been taken and ingredients used along the Y scrollbar
-             var windowTop = (window.pageYOffset || e.target.scrollTop)  - (e.target.clientTop || 0);
-            ctrl.unusedIngredients = _(ctrl.unusedIngredients).dropWhile((ingredient : Ingredient) => {
-                if (ingredient.scrollY < windowTop){
+            /*ctrl.unusedIngredients = _(ctrl.unusedIngredients).dropWhile((ingredient : Ingredient) => {
+                if (ingredient.scrollY < this.windowTop){
                     ingredient.use();
                     ctrl.usedIngredients.unshift(ingredient);
-                    //console.log("used " + ingredient.name);
-                    this.animationService.animate(ingredient.spriteId);
+                    
                     return true;
                 }
                 return false;
             }).value();
             
             ctrl.usedIngredients = _(ctrl.usedIngredients).dropWhile((ingredient : Ingredient) => {
-                if (ingredient.scrollY > windowTop){
-                    //console.log("unused " + ingredient.name);
+                if (ingredient.scrollY > this.windowTop){
                     ingredient.unuse();
                     ctrl.unusedIngredients.unshift(ingredient);
-                    this.animationService.unanimate(ingredient.spriteId);
+                    //this.animationService.unanimate(new Animation(ingredient.spriteId, "cooking-area"));
                     return true;
                 }
                 return false;
-            }).value();
+            }).value();*/
 
             var ingredients = document.querySelector('#'+this.targetedId);
             if (ingredients){
 
                 var stickheight = 0;
                 var clientRect = ingredients.getBoundingClientRect();
-                windowTop;
                                 
                 if (this.ingredientsListStyle === undefined && clientRect.top < stickheight){
                     var containerId = this.targetedId + this.targetedContainerSuffix;

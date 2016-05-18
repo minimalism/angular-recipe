@@ -1,18 +1,10 @@
 export class Ingredient {
-  private static idCtr:number = 1;
-  private static nextId() {
-      return "ingredient"+Ingredient.idCtr++;
-  }   
-  name : string;
-  amount : string;
-  id : string = Ingredient.nextId();
-  spriteId : string = this.id + "_sprite"; 
-  scrollY : number;
+  containerId : string; 
+  //scrollY : number;
   used : boolean;
 
-  constructor(name: string, amount: string) {
-    this.name = name;
-    this.amount = amount;
+  constructor(public id : string, public name: string, public amount: string) {
+    this.containerId = id + "container";
   }
   
     use(){

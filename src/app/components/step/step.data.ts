@@ -8,6 +8,8 @@ export class Step {
     description : string;
     ingredients : Ingredient[];
     id : string = Step.nextId();
+    top : number;
+    height : number;
     
     constructor(description : string, ingredients? : Ingredient[]){
         this.description = description;

@@ -8,13 +8,13 @@ import { Step } from './step.data.ts';
     ],
     templateUrl: 'app/components/step/step.template.html'
 })
-export class StepComponent implements AfterViewInit {
+export class StepComponent {
     @Input() stepData : Step;
     
     constructor(){
     }
     
-    ngAfterViewInit() {
+    /*ngAfterViewInit() {
         var stepDiv = document.querySelector('#'+this.stepData.id);
         var top = stepDiv.getBoundingClientRect().top;
         
@@ -23,5 +23,5 @@ export class StepComponent implements AfterViewInit {
         for (var ingredient of this.stepData.ingredients){ 
             ingredient.scrollY = top + windowTop;
         }
-    }
+    }*/
 }
