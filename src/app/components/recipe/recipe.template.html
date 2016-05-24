@@ -16,11 +16,9 @@
     <div class="utensil" id="frying-pan">Frying pan</div>
     
     <div id="right-column" [ngStyle]=ingredientsListStyle (window:resize)="onResize($event)">
-            <div id="cooking-area">
-            </div>
-            <div id="ingredient-list">
-
-            
+        <div id="cooking-area">
+        </div>
+        <div id="ingredient-list">
             <h2>Ingredients</h2>
             <ul>
                 <li *ngFor="let ingredient of recipe.ingredients" class="ingredient">

@@ -11,7 +11,7 @@ var webpackConfig = {
   },
 
   output: {
-    path: './dist'
+    path: './',
   },
 
   plugins: [
@@ -38,7 +38,7 @@ var defaultConfig = {
   output: {
     filename: '[name].bundle.js',
     sourceMapFilename: '[name].map',
-    chunkFilename: '[id].chunk.js',
+    chunkFilename: '[id].chunk.js'
   },
 
   module: {
@@ -58,12 +58,10 @@ var defaultConfig = {
       {
         test: /\.scss$/,
         exclude: /node_modules/,
-        //loader: ExtractTextPlugin.extract('style', 'css?'+ '/' + 'sourceMap!style!sass?sourceComments&')
-        
         loaders: ["style", "css?sourceMap", "sass?sourceMap"],
       },
       { test: /\.png$/,    
-        loader: "url-loader?limit=10000&minetype=image/png&name=[path][name].[ext]" 
+        loader: "url-loader?limit=10000&minetype=image/png&name=[name].[ext]" 
       }
     ],
     noParse: [
