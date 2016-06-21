@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { Recipe } from './../components/recipe/recipe.data';
 import { Step } from './../components/step/step.data';
-import { Ingredient } from './../components/ingredient/ingredient.data';
+import { Ingredient, Utensil } from './../components/ingredient/ingredient.data';
 import { Move, Chop, Pour } from './../components/animation/animation.data';
 
 @Injectable()
@@ -17,22 +17,22 @@ export class RecipeService {
                 [ ]),
               new Step("Begin by chopping up the broccoli and the onion.", 
                 [ new Ingredient("broccoli", "Broccoli", "1"),
-                  new Ingredient("onion", "Yellow Onion", "1") ]),
+                  new Ingredient("onion", "Yellow Onion", "1") ],
+                [ new Utensil("knife") ]),
                 
               new Step("Fry the broccoli in olive oil. After a few minutes, add the onion.", 
-                [ new Ingredient("oil", "Olive oil", "0ml"), 
-                ]),
+                [ new Ingredient("oil", "Olive oil", "0ml") ],
+                [ new Utensil("frying-pan") ]),
                 
               new Step("Mix the Soy sauce and Sriracha into a bowl. Add 100dl cold water.", 
                 [ new Ingredient("soy", "Soy Sauce (Japanese)", "0dl"),
-                  new Ingredient("chili", "Sriracha", "0dl"),  
-                ]),
+                  new Ingredient("chili", "Sriracha", "0dl") ],
+                [ new Utensil("bowl") ]),
                 
               new Step("Add the cornstarch to the bowl, and stir until the clumps have dissolved.", 
                 [  new Ingredient("bouillon", "Vegetable bouillon", "0.5"),
                    new Ingredient("garlic", "Garlic", "2 cloves"),
-                   new Ingredient("cornstarch",  "Cornstarch", "0dl")
-                ]),
+                   new Ingredient("cornstarch",  "Cornstarch", "0dl") ]),
                 
               new Step("Mix the contents of the bowl into the frying pan and let simmer until it thickens.", 
                 [ ]),

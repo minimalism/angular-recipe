@@ -16,3 +16,9 @@ export class Ingredient {
     this.used = false;
   }
 }
+
+export class Utensil {
+  constructor(public id : string){
+    
+  }
+}

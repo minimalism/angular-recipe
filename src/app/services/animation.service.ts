@@ -37,8 +37,10 @@ export class AnimationService {
         
         for (var animation of animations){
             
-            this.createKeyFrame(animation.id, 'to { ' + animation.rules + ' }');
-            this.createKeyFrame(animation.reverseId, 'from { ' + animation.rules + ' }');
+            var rules = animation.getRules();
+            
+            this.createKeyFrame(animation.id, 'to { ' + rules + ' }');
+            this.createKeyFrame(animation.reverseId, 'from { ' + rules + ' }');
             
             this.stylesheet.insertRule('.' + animation.id + `{
                 animation: `+ animation.id +` 1s ease 1 forwards;
@@ -56,6 +58,9 @@ export class AnimationService {
             
             var animationTarget = this.animationTargets[animation.targetId].element;
             
+            if (animationTarget == null){
+                throw `Animation target with id ${animation.targetId} was null.`;
+            }
             // Splice in a new parent for this animation
             var parent = animationTarget.parentElement;
             animationTarget.remove();
@@ -116,7 +121,8 @@ export class AnimationService {
             });  
         }
     }
-      
+    
+    
     private playNext(){
         
         if (!this.playing.promise.isPending()){

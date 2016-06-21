@@ -25,6 +25,8 @@ export class RecipeComponent implements AfterViewInit {
     unusedIngredients : Array<Ingredient> = [];
     usedIngredients : Array<Ingredient> = [];
     
+    private animations : Boolean = false;
+
     private windowTop : number = 0;
     targetedId = "right-column";
     targetedContainerSuffix = "container___"; 
@@ -65,26 +67,28 @@ export class RecipeComponent implements AfterViewInit {
         this.recalculateStepY();
         
         this.animationService.generateAnimationLayers(this.recipe.animations);
-        
+
         this.scrollSpyService.getObservable('window').subscribe((e: any) => {
             
             var wtop = this.windowTop = (window.pageYOffset || document.documentElement.scrollTop)  - (document.documentElement.clientTop || 0);
             
-            // Calculate current animationstep
-            var stepIndex = _.findIndex(this.recipe.steps, (step : Step) => {
-                return step.top > wtop
-            });
-            if (stepIndex > -1){
-                if (stepIndex > 0){
-                    var prevCompletedStep = this.recipe.steps[stepIndex-1];
-                    this.animationService.setStep(stepIndex + (wtop - prevCompletedStep.top) / prevCompletedStep.height);
+            if (this.animations){
+                // Calculate current animationstep
+                var stepIndex = _.findIndex(this.recipe.steps, (step : Step) => {
+                    return step.top > wtop
+                });
+                if (stepIndex > -1){
+                    if (stepIndex > 0){
+                        var prevCompletedStep = this.recipe.steps[stepIndex-1];
+                        this.animationService.setStep(stepIndex + (wtop - prevCompletedStep.top) / prevCompletedStep.height);
+                    }
+                    else{
+                        this.animationService.setStep(0);
+                    } 
                 }
                 else{
-                    this.animationService.setStep(0);
-                } 
-            }
-            else{
-                this.animationService.setStep(999);
+                    this.animationService.setStep(999);
+                }
             }
             
             // Check which steps have been taken and ingredients used along the Y scrollbar

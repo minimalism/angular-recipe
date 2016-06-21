@@ -27,28 +27,28 @@
 
 .utensil{
     z-index:10;
+    position:absolute;
+    display:none;
 }
 
-#cutting-board{
+#utensil-cutting-board{
     top:50vh;
-    position:absolute;
 }
 
-#frying-pan{
+#utensil-frying-pan{
     top:50vh;
     position:absolute;
-    
 }
 
 #ingredient-list {
     position: relative;
-    //position:absolute;
     width:300px;
     ul{
         list-style-type:none;
         display: flex;
         flex-direction: column;
-        height: 90vh;
+        padding-left: 0;
+        height: 80vh;
         li {
             flex:1;
         }
@@ -56,7 +56,6 @@
 }
 
 #cooking-area{
-    background-color:#552;
     position: relative;
     text-align: center;
     width:50%;

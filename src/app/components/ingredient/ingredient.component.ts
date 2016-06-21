@@ -14,6 +14,4 @@ export class IngredientComponent {
     
     constructor(animationService : AnimationService){
     }
-    
-
 }

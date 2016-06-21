@@ -2,12 +2,17 @@
     
     margin: 5px;
     position: relative;
+    padding-left:25px;
     
     .used{
         color: #ccc;
         text-decoration:line-through;
         transition: 1s linear all;
     }
+}
+
+.name{
+    padding-left:30px;
 }
 
 .sprite{
@@ -23,6 +28,18 @@
 
 #oil, #soy, #chili {
      background-position: -256px 0;
+}
+
+#oil{
+    filter: hue-rotate(45);
+}
+
+#soy{
+    filter: hue-rotate(90);
+}
+
+#chili {
+    filter: hue-rotate(180);
 }
 
 #broccoli {
